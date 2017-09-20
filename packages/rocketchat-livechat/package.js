@@ -128,6 +128,7 @@ Package.onUse(function(api) {
 	api.addFiles('server/hooks/markRoomResponded.js', 'server');
 	api.addFiles('server/hooks/offlineMessage.js', 'server');
 	api.addFiles('server/hooks/sendToCRM.js', 'server');
+	api.addFiles('server/hooks/rdStation.js', 'server');
 
 	// methods
 	api.addFiles('server/methods/addAgent.js', 'server');
