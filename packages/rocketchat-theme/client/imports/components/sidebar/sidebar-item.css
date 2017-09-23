@@ -1,7 +1,12 @@
-.rtl .sidebar-item {
-	margin: 0 8px 0 0;
-}
+.sidebar-light {
+	& .sidebar-item {
+		color: var(--color-dark);
 
+		&:hover {
+			background-color: var(--sidebar-background-light-hover);
+		}
+	}
+}
 .sidebar-item {
 	position: relative;
 
@@ -18,18 +23,29 @@
 	border-radius: var(--sidebar-item-radius);
 	align-items: center;
 
-	&:hover {
-		& .sidebar-item__menu {
-			display: block;
-		}
+	background-color: var(--sidebar-item-background);
+	color: var(--sidebar-item-text-color);
 
-		& .badge {
-			display: none;
+	transition: all 0.3s;
+
+	&:hover {
+		background-color: var(--sidebar-item-hover-background);
+
+		& .sidebar-item__menu {
+			margin: 0;
 		}
 	}
 
 	&--active {
-		background-color: var(--color-dark-light);
+		background-color: var(--sidebar-item-active-background);
+	}
+
+	&--unread {
+    color: var(--sidebar-item-unread-color);
+
+		& .sidebar-item__menu {
+			transition: margin 0.1s;
+		}
 	}
 
 	&--darken {
@@ -57,14 +73,10 @@
 
 		margin: 0 -4px;
 
-		color: var(--sidebar-item-text-color);
+		color: inherit;
 
 		font-size: 1rem;
 		align-items: center;
-
-		&--active {
-			color: var(--sidebar-item-active-text-color);
-		}
 	}
 
 	& .badge {
@@ -134,7 +146,8 @@
 	}
 
 	&__menu {
-		display: none;
+		margin: 0 -15px;
+		padding: 6px;
 
 		&-icon {
 			fill: var(--color-white);
