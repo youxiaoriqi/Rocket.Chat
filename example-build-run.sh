@@ -24,9 +24,9 @@ cd $DEPLOY_DIR/bundle/programs/server
 npm install
 
 cd $DEPLOY_DIR/bundle
-NODE_ENV=production \
-PORT=3000 \
-ROOT_URL=http://localhost:3000 \
-MONGO_URL=mongodb://localhost:27017/rocketchat \
-MONGO_OPLOG_URL=mongodb://localhost:27017/local \
+export NODE_ENV=production \
+export PORT=3000 \
+export ROOT_URL=http://localhost:3000 \
+export MONGO_URL=mongodb://localhost:27017/rocketchat \
+#MONGO_OPLOG_URL=mongodb://localhost:27017/local \
 node main.js
