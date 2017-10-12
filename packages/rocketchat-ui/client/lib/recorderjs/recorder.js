@@ -4,6 +4,7 @@
 
   var Recorder = function(source, cfg){
     var config = cfg || {};
+    console.log(config);
     var bufferLen = config.bufferLen || 4096;
     var numChannels = config.numChannels || 2;
     this.context = source.context;

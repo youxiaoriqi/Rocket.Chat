@@ -22,7 +22,7 @@ this.AudioRecorder = new class {
 	startUserMedia(stream) {
 		this.stream = stream;
 		const input = window.audioContext.createMediaStreamSource(stream);
-		this.recorder = new Recorder(input, {workerPath: '/recorderWorker.js'});
+		this.recorder = new Recorder(input, {numChannels:1,workerPath: '/recorderWorker.js'});
 		return this.recorder.record();
 	}
 
