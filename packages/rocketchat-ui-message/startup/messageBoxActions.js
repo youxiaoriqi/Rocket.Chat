@@ -15,7 +15,7 @@ RocketChat.messageBox.actions.add('Create_new', 'Video_message', {
 RocketChat.messageBox.actions.add('Create_new', 'Audio_message', {
 	id: 'audio-message',
 	icon: 'mic',
-	condition: () => (navigator.getUserMedia || navigator.webkitGetUserMedia) && RocketChat.settings.get('FileUpload_Enabled') && RocketChat.settings.get('Message_AudioRecorderEnabled') && (!RocketChat.settings.get('FileUpload_MediaTypeWhiteList') || RocketChat.settings.get('FileUpload_MediaTypeWhiteList').match(/audio\/wav|audio\/\*/i)),
+	condition: () => (navigator.getUserMedia || navigator.webkitGetUserMedia || Meteor.isCordova) && RocketChat.settings.get('FileUpload_Enabled') && RocketChat.settings.get('Message_AudioRecorderEnabled') && (!RocketChat.settings.get('FileUpload_MediaTypeWhiteList') || RocketChat.settings.get('FileUpload_MediaTypeWhiteList').match(/audio\/wav|audio\/\*/i)),
 	action({event, element}) {
 		event.preventDefault();
 		const icon = element;
