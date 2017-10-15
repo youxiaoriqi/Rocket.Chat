@@ -85,7 +85,6 @@
 		console.log("Converting to Mp3");
 
         encoderWorker.postMessage({ cmd: 'init', config:{
-            mode : 3,
 			channels:1,
 			samplerate: data.sampleRate,
 			bitrate: data.bitsPerSample
