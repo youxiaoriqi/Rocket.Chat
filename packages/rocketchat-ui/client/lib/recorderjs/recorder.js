@@ -86,7 +86,7 @@
 			bitrate: data.bitsPerSample
         }});
         */
-       
+
         encoderWorker.postMessage({
           cmd: 'init',
           config: {}
@@ -103,7 +103,7 @@
 
 				var audio = new Audio();
 				audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
-				audio.play(); 
+				audio.play();
 
 				console.log ("The Mp3 data " + e.data.buf.length);
 				console.log(e.data.buf);
@@ -111,13 +111,13 @@
 				var mp3Blob = new Blob(e.data.buf, {type: 'audio/mp3'});
 				//uploadAudio(mp3Blob);
 
-				return fileUpload([
+/*				return fileUpload([
 					{
 						file: mp3Blob,
 						type: 'audio/mp3',
 						name: `${ TAPi18n.__('Audio record') }.MP3`
 					}
-				]);
+				]);*/
 
 
             }
