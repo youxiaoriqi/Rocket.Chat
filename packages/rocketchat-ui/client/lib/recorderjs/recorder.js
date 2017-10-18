@@ -1,7 +1,7 @@
 (function(window){
 
   var WORKER_PATH = 'recorderWorker.js';
-  var encoderWorker = new Worker('mp3Worker.js');
+  var encoderWorker = new Worker('newMp3Worker.js');
 
   var Recorder = function(source, cfg){
     var config = cfg || {};
@@ -71,39 +71,44 @@
 
     worker.onmessage = function(e){
       var blob = e.data;
-	  //console.log("the blob " +  blob + " " + blob.size + " " + blob.type);
+	  console.log("the blob " +  blob + " " + blob.size + " " + blob.type);
 
 	  var arrayBuffer;
 	  var fileReader = new FileReader();
 
-	  fileReader.onload = function(){
-		arrayBuffer = this.result;
-		var buffer = new Uint8Array(arrayBuffer),
-        data = parseWav(buffer);
+	  fileReader.onload = function(e){
 
-        console.log(data);
 		console.log("Converting to Mp3");
 
-        encoderWorker.postMessage({ cmd: 'init', config:{
+ /*   encoderWorker.postMessage({ cmd: 'init', config:{
 			channels:1,
 			samplerate: data.sampleRate,
 			bitrate: data.bitsPerSample
         }});
+        */
+       
+        encoderWorker.postMessage({
+          cmd: 'init',
+          config: {}
+        });
 
-        encoderWorker.postMessage({ cmd: 'encode', buf: Uint8ArrayToFloat32Array(data.samples) });
+
+		encoderWorker.postMessage({ cmd: 'encode', rawInput: e.target.result });
         encoderWorker.postMessage({ cmd: 'finish'});
+
         encoderWorker.onmessage = function(e) {
-            if (e.data.cmd == 'data') {
+            if (e.data.cmd == 'end') {
 
 				console.log("Done converting to Mp3");
 
-/*				var audio = new Audio();
+				var audio = new Audio();
 				audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
-				audio.play();*/
+				audio.play(); 
 
 				console.log ("The Mp3 data " + e.data.buf.length);
+				console.log(e.data.buf);
 
-				var mp3Blob = new Blob([new Uint8Array(e.data.buf)], {type: 'audio/mp3'});
+				var mp3Blob = new Blob(e.data.buf, {type: 'audio/mp3'});
 				//uploadAudio(mp3Blob);
 
 				return fileUpload([
