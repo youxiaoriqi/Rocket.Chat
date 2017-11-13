@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "atlassian-crowd": {
+      "version": "0.5.0",
+      "resolved": "http://registry.npm.taobao.org/atlassian-crowd/download/atlassian-crowd-0.5.0.tgz",
+      "from": "atlassian-crowd@0.5.0"
+    }
+  }
+}

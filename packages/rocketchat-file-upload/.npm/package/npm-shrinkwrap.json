@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "filesize": {
+      "version": "3.3.0",
+      "resolved": "http://registry.npm.taobao.org/filesize/download/filesize-3.3.0.tgz",
+      "from": "filesize@3.3.0"
+    }
+  }
+}

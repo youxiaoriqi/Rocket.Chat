@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "autolinker": {
+      "version": "1.4.0",
+      "resolved": "http://registry.npm.taobao.org/autolinker/download/autolinker-1.4.0.tgz",
+      "from": "autolinker@1.4.0"
+    }
+  }
+}

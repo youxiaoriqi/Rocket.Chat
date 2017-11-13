@@ -1,0 +1,114 @@
+{
+  "dependencies": {
+    "buffer-crc32": {
+      "version": "0.2.1",
+      "resolved": "http://registry.npm.taobao.org/buffer-crc32/download/buffer-crc32-0.2.1.tgz",
+      "from": "buffer-crc32@0.2.1"
+    },
+    "bytes": {
+      "version": "0.2.0",
+      "resolved": "http://registry.npm.taobao.org/bytes/download/bytes-0.2.0.tgz",
+      "from": "bytes@0.2.0"
+    },
+    "connect": {
+      "version": "2.7.10",
+      "resolved": "http://registry.npm.taobao.org/connect/download/connect-2.7.10.tgz",
+      "from": "connect@2.7.10"
+    },
+    "cookie": {
+      "version": "0.0.5",
+      "resolved": "http://registry.npm.taobao.org/cookie/download/cookie-0.0.5.tgz",
+      "from": "cookie@0.0.5"
+    },
+    "cookie-signature": {
+      "version": "1.0.1",
+      "resolved": "http://registry.npm.taobao.org/cookie-signature/download/cookie-signature-1.0.1.tgz",
+      "from": "cookie-signature@1.0.1"
+    },
+    "debug": {
+      "version": "3.1.0",
+      "resolved": "http://registry.npm.taobao.org/debug/download/debug-3.1.0.tgz",
+      "from": "debug@*"
+    },
+    "formidable": {
+      "version": "1.0.14",
+      "resolved": "http://registry.npm.taobao.org/formidable/download/formidable-1.0.14.tgz",
+      "from": "formidable@1.0.14"
+    },
+    "fresh": {
+      "version": "0.1.0",
+      "resolved": "http://registry.npm.taobao.org/fresh/download/fresh-0.1.0.tgz",
+      "from": "fresh@0.1.0"
+    },
+    "lodash": {
+      "version": "3.10.1",
+      "resolved": "http://registry.npm.taobao.org/lodash/download/lodash-3.10.1.tgz",
+      "from": "lodash@^3.5.0"
+    },
+    "mime": {
+      "version": "1.2.6",
+      "resolved": "http://registry.npm.taobao.org/mime/download/mime-1.2.6.tgz",
+      "from": "mime@1.2.6"
+    },
+    "ms": {
+      "version": "2.0.0",
+      "resolved": "http://registry.npm.taobao.org/ms/download/ms-2.0.0.tgz",
+      "from": "ms@2.0.0"
+    },
+    "pause": {
+      "version": "0.0.1",
+      "resolved": "http://registry.npm.taobao.org/pause/download/pause-0.0.1.tgz",
+      "from": "pause@0.0.1"
+    },
+    "qs": {
+      "version": "0.6.5",
+      "resolved": "http://registry.npm.taobao.org/qs/download/qs-0.6.5.tgz",
+      "from": "qs@0.6.5"
+    },
+    "querystring": {
+      "version": "0.2.0",
+      "resolved": "http://registry.npm.taobao.org/querystring/download/querystring-0.2.0.tgz",
+      "from": "querystring@0.2.0"
+    },
+    "range-parser": {
+      "version": "0.0.4",
+      "resolved": "http://registry.npm.taobao.org/range-parser/download/range-parser-0.0.4.tgz",
+      "from": "range-parser@0.0.4"
+    },
+    "sax": {
+      "version": "1.2.4",
+      "resolved": "http://registry.npm.taobao.org/sax/download/sax-1.2.4.tgz",
+      "from": "sax@>=0.1.1"
+    },
+    "send": {
+      "version": "0.1.0",
+      "resolved": "http://registry.npm.taobao.org/send/download/send-0.1.0.tgz",
+      "from": "send@0.1.0"
+    },
+    "xml-crypto": {
+      "version": "0.6.0",
+      "resolved": "http://registry.npm.taobao.org/xml-crypto/download/xml-crypto-0.6.0.tgz",
+      "from": "xml-crypto@0.6.0"
+    },
+    "xml2js": {
+      "version": "0.2.0",
+      "resolved": "http://registry.npm.taobao.org/xml2js/download/xml2js-0.2.0.tgz",
+      "from": "xml2js@0.2.0"
+    },
+    "xmlbuilder": {
+      "version": "2.6.4",
+      "resolved": "http://registry.npm.taobao.org/xmlbuilder/download/xmlbuilder-2.6.4.tgz",
+      "from": "xmlbuilder@2.6.4"
+    },
+    "xmldom": {
+      "version": "0.1.19",
+      "resolved": "http://registry.npm.taobao.org/xmldom/download/xmldom-0.1.19.tgz",
+      "from": "xmldom@0.1.19"
+    },
+    "xpath.js": {
+      "version": "1.0.7",
+      "resolved": "http://registry.npm.taobao.org/xpath.js/download/xpath.js-1.0.7.tgz",
+      "from": "xpath.js@>=0.0.3"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "dependencies": {
+    "bl": {
+      "version": "1.2.1",
+      "resolved": "http://registry.npm.taobao.org/bl/download/bl-1.2.1.tgz",
+      "from": "bl@^1.0.0"
+    },
+    "core-util-is": {
+      "version": "1.0.2",
+      "resolved": "http://registry.npm.taobao.org/core-util-is/download/core-util-is-1.0.2.tgz",
+      "from": "core-util-is@~1.0.0"
+    },
+    "end-of-stream": {
+      "version": "1.4.0",
+      "resolved": "http://registry.npm.taobao.org/end-of-stream/download/end-of-stream-1.4.0.tgz",
+      "from": "end-of-stream@^1.0.0"
+    },
+    "inherits": {
+      "version": "2.0.3",
+      "resolved": "http://registry.npm.taobao.org/inherits/download/inherits-2.0.3.tgz",
+      "from": "inherits@~2.0.3"
+    },
+    "isarray": {
+      "version": "1.0.0",
+      "resolved": "http://registry.npm.taobao.org/isarray/download/isarray-1.0.0.tgz",
+      "from": "isarray@~1.0.0"
+    },
+    "once": {
+      "version": "1.4.0",
+      "resolved": "http://registry.npm.taobao.org/once/download/once-1.4.0.tgz",
+      "from": "once@^1.4.0"
+    },
+    "process-nextick-args": {
+      "version": "1.0.7",
+      "resolved": "http://registry.npm.taobao.org/process-nextick-args/download/process-nextick-args-1.0.7.tgz",
+      "from": "process-nextick-args@~1.0.6"
+    },
+    "readable-stream": {
+      "version": "2.3.3",
+      "resolved": "http://registry.npm.taobao.org/readable-stream/download/readable-stream-2.3.3.tgz",
+      "from": "readable-stream@^2.0.0"
+    },
+    "safe-buffer": {
+      "version": "5.1.1",
+      "resolved": "http://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.1.tgz",
+      "from": "safe-buffer@~5.1.1"
+    },
+    "string_decoder": {
+      "version": "1.0.3",
+      "resolved": "http://registry.npm.taobao.org/string_decoder/download/string_decoder-1.0.3.tgz",
+      "from": "string_decoder@~1.0.3"
+    },
+    "tar-stream": {
+      "version": "1.5.2",
+      "resolved": "http://registry.npm.taobao.org/tar-stream/download/tar-stream-1.5.2.tgz",
+      "from": "tar-stream@1.5.2"
+    },
+    "util-deprecate": {
+      "version": "1.0.2",
+      "resolved": "http://registry.npm.taobao.org/util-deprecate/download/util-deprecate-1.0.2.tgz",
+      "from": "util-deprecate@~1.0.1"
+    },
+    "wrappy": {
+      "version": "1.0.2",
+      "resolved": "http://registry.npm.taobao.org/wrappy/download/wrappy-1.0.2.tgz",
+      "from": "wrappy@1"
+    },
+    "xtend": {
+      "version": "4.0.1",
+      "resolved": "http://registry.npm.taobao.org/xtend/download/xtend-4.0.1.tgz",
+      "from": "xtend@^4.0.0"
+    }
+  }
+}
