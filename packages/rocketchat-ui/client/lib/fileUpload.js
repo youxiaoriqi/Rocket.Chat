@@ -78,162 +78,101 @@ fileUpload = function(filesToUpload) {
 		}
 
 		return getUploadPreview(file, function(file, preview) {
-			let text = '';
 
-			if (file.type === 'audio') {
-				text = `\
-<div class='upload-preview'>
-	<audio  style="width: 100%;" controls="controls">
-		<source src="${ preview }" type="audio/wav">
-		Your browser does not support the audio element.
-	</audio>
-</div>
-<div class='upload-preview-title'>
-	<input id='file-name' style='display: inherit;' value='${ Handlebars._escape(file.name) }' placeholder='${ t('Upload_file_name') }'>
-	<input id='file-description' style='display: inherit;' value='' placeholder='${ t('Upload_file_description') }'>
-</div>`;
-			} else if (file.type === 'video') {
-				text = `\
-<div class='upload-preview'>
-	<video  style="width: 100%;" controls="controls">
-		<source src="${ preview }" type="video/webm">
-		Your browser does not support the video element.
-	</video>
-</div>
-<div class='upload-preview-title'>
-	<input id='file-name' style='display: inherit;' value='${ Handlebars._escape(file.name) }' placeholder='${ t('Upload_file_name') }'>
-	<input id='file-description' style='display: inherit;' value='' placeholder='${ t('Upload_file_description') }'>
-</div>`;
-			} else if (file.type === 'image') {
-				text = `\
-<div class='upload-preview'>
-	<div class='upload-preview-file' style='background-image: url(${ preview })'></div>
-</div>
-<div class='upload-preview-title'>
-	<input id='file-name' style='display: inherit;' value='${ Handlebars._escape(file.name) }' placeholder='${ t('Upload_file_name') }'>
-	<input id='file-description' style='display: inherit;' value='' placeholder='${ t('Upload_file_description') }'>
-</div>`;
-			} else {
-				const fileSize = formatBytes(file.file.size);
+			consume();
 
-				text = `\
-<div class='upload-preview'>
-	<div>${ Handlebars._escape(file.name) } - ${ fileSize }</div>
-</div>
-<div class='upload-preview-title'>
-	<input id='file-name' style='display: inherit;' value='${ Handlebars._escape(file.name) }' placeholder='${ t('Upload_file_name') }'>
-	<input id='file-description' style='display: inherit;' value='' placeholder='${ t('Upload_file_description') }'>
-</div>`;
-			}
+			const record = {
+				name:  file.name || file.file.name,
+				size: file.file.size,
+				type: file.file.type,
+				rid: roomId,
+				description: ''
+			};
 
-			return swal({
-				title: t('Upload_file_question'),
-				text,
-				showCancelButton: true,
-				closeOnConfirm: false,
-				closeOnCancel: false,
-				confirmButtonText: t('Send'),
-				cancelButtonText: t('Cancel'),
-				html: true
-			}, function(isConfirm) {
-				consume();
-				if (!isConfirm) {
+			const upload = fileUploadHandler('Uploads', record, file.file);
+
+			let uploading = Session.get('uploading') || [];
+			uploading.push({
+				id: upload.id,
+				name: upload.getFileName(),
+				percentage: 0
+			});
+
+			Session.set('uploading', uploading);
+
+			upload.onProgress = function(progress) {
+				uploading = Session.get('uploading');
+
+				const item = _.findWhere(uploading, {id: upload.id});
+				if (item != null) {
+					item.percentage = Math.round(progress * 100) || 0;
+					return Session.set('uploading', uploading);
+				}
+			};
+
+			upload.start(function(error, file, storage) {
+				if (error) {
+					let uploading = Session.get('uploading');
+					if (!Array.isArray(uploading)) {
+						uploading = [];
+					}
+
+					const item = _.findWhere(uploading, { id: upload.id });
+
+					if (_.isObject(item)) {
+						item.error = error.message;
+						item.percentage = 0;
+					} else {
+						uploading.push({
+							error: error.error,
+							percentage: 0
+						});
+					}
+
+					Session.set('uploading', uploading);
 					return;
 				}
 
-				const record = {
-					name: document.getElementById('file-name').value || file.name || file.file.name,
-					size: file.file.size,
-					type: file.file.type,
-					rid: roomId,
-					description: document.getElementById('file-description').value
-				};
 
-				const upload = fileUploadHandler('Uploads', record, file.file);
+				if (file) {
+					Meteor.call('sendFileMessage', roomId, storage, file, () => {
+						Meteor.setTimeout(() => {
+							const uploading = Session.get('uploading');
+							if (uploading !== null) {
+								const item = _.findWhere(uploading, {
+									id: upload.id
+								});
+								return Session.set('uploading', _.without(uploading, item));
+							}
+						}, 2000);
+					});
+				}
+			});
 
-				let uploading = Session.get('uploading') || [];
-				uploading.push({
-					id: upload.id,
-					name: upload.getFileName(),
-					percentage: 0
-				});
+			Tracker.autorun(function(c) {
+				const cancel = Session.get(`uploading-cancel-${ upload.id }`);
+				if (cancel) {
+					let item;
+					upload.stop();
+					c.stop();
 
-				Session.set('uploading', uploading);
-
-				upload.onProgress = function(progress) {
 					uploading = Session.get('uploading');
-
-					const item = _.findWhere(uploading, {id: upload.id});
-					if (item != null) {
-						item.percentage = Math.round(progress * 100) || 0;
-						return Session.set('uploading', uploading);
-					}
-				};
-
-				upload.start(function(error, file, storage) {
-					if (error) {
-						let uploading = Session.get('uploading');
-						if (!Array.isArray(uploading)) {
-							uploading = [];
-						}
-
-						const item = _.findWhere(uploading, { id: upload.id });
-
-						if (_.isObject(item)) {
-							item.error = error.message;
+					if (uploading != null) {
+						item = _.findWhere(uploading, {id: upload.id});
+						if (item != null) {
 							item.percentage = 0;
-						} else {
-							uploading.push({
-								error: error.error,
-								percentage: 0
-							});
 						}
-
 						Session.set('uploading', uploading);
-						return;
 					}
 
-
-					if (file) {
-						Meteor.call('sendFileMessage', roomId, storage, file, () => {
-							Meteor.setTimeout(() => {
-								const uploading = Session.get('uploading');
-								if (uploading !== null) {
-									const item = _.findWhere(uploading, {
-										id: upload.id
-									});
-									return Session.set('uploading', _.without(uploading, item));
-								}
-							}, 2000);
-						});
-					}
-				});
-
-				Tracker.autorun(function(c) {
-					const cancel = Session.get(`uploading-cancel-${ upload.id }`);
-					if (cancel) {
-						let item;
-						upload.stop();
-						c.stop();
-
+					return Meteor.setTimeout(function() {
 						uploading = Session.get('uploading');
 						if (uploading != null) {
 							item = _.findWhere(uploading, {id: upload.id});
-							if (item != null) {
-								item.percentage = 0;
-							}
-							Session.set('uploading', uploading);
+							return Session.set('uploading', _.without(uploading, item));
 						}
-
-						return Meteor.setTimeout(function() {
-							uploading = Session.get('uploading');
-							if (uploading != null) {
-								item = _.findWhere(uploading, {id: upload.id});
-								return Session.set('uploading', _.without(uploading, item));
-							}
-						}, 1000);
-					}
-				});
+					}, 1000);
+				}
 			});
 		});
 	}
