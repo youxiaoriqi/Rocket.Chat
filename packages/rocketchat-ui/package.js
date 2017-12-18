@@ -69,6 +69,7 @@ Package.onUse(function(api) {
 
 	// LIB RECORDERJS
 	api.addFiles('client/lib/recorderjs/audioRecorder.js', 'client');
+	api.addFiles('client/lib/recorderjs/mp3Recorder.js', 'client');
 	api.addFiles('client/lib/recorderjs/videoRecorder.js', 'client');
 	api.addFiles('client/lib/recorderjs/recorder.js', 'client');
 

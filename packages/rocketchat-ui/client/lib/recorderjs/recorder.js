@@ -101,23 +101,23 @@
 
 				console.log("Done converting to Mp3");
 
-				var audio = new Audio();
-				audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
-				audio.play();
+				//var audio = new Audio();
+				//audio.src = 'data:audio/mp3;base64,'+encode64(e.data.buf);
+				//audio.play();
 
-				console.log ("The Mp3 data " + e.data.buf.length);
-				console.log(e.data.buf);
+				//console.log ("The Mp3 data " + e.data.buf.length);
+				//console.log(e.data.buf);
 
 				var mp3Blob = new Blob(e.data.buf, {type: 'audio/mp3'});
 				//uploadAudio(mp3Blob);
 
-/*				return fileUpload([
-					{
-						file: mp3Blob,
-						type: 'audio/mp3',
-						name: `${ TAPi18n.__('Audio record') }.MP3`
-					}
-				]);*/
+						return fileUpload([
+								{
+									file: mp3Blob,
+									type: 'audio/mp3',
+									name: `${ TAPi18n.__('Audio record') }.MP3`
+								}
+							]);
 
 
             }
@@ -139,38 +139,6 @@
 			binary += String.fromCharCode( bytes[ i ] );
 		}
 		return window.btoa( binary );
-	}
-
-	function parseWav(wav) {
-		function readInt(i, bytes) {
-			var ret = 0,
-				shft = 0;
-
-			while (bytes) {
-				ret += wav[i] << shft;
-				shft += 8;
-				i++;
-				bytes--;
-			}
-			return ret;
-		}
-		if (readInt(20, 2) != 1) throw 'Invalid compression code, not PCM';
-		if (readInt(22, 2) != 1) throw 'Invalid number of channels, not 1';
-		return {
-			sampleRate: readInt(24, 4),
-			bitsPerSample: readInt(34, 2),
-			samples: wav.subarray(44)
-		};
-	}
-
-	function Uint8ArrayToFloat32Array(u8a){
-		var f32Buffer = new Float32Array(u8a.length);
-		for (var i = 0; i < u8a.length; i++) {
-			var value = u8a[i<<1] + (u8a[(i<<1)+1]<<8);
-			if (value >= 0x8000) value |= ~0x7FFF;
-			f32Buffer[i] = value / 0x8000;
-		}
-		return f32Buffer;
 	}
 
 
