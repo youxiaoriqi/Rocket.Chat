@@ -1,29 +1,30 @@
 {
+  "lockfileVersion": 1,
   "dependencies": {
     "he": {
       "version": "1.1.0",
-      "resolved": "http://registry.npm.taobao.org/he/download/he-1.1.0.tgz",
-      "from": "he@1.1.0"
+      "resolved": "https://registry.npmjs.org/he/-/he-1.1.0.tgz",
+      "integrity": "sha1-KTGdSb7sE6mx88T5sqbd5IWbsqc="
     },
     "iconv-lite": {
       "version": "0.4.13",
-      "resolved": "http://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.4.13.tgz",
-      "from": "iconv-lite@0.4.13"
+      "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.13.tgz",
+      "integrity": "sha1-H4irpKsLFQjoMSrMOTRfNumS4vI="
     },
     "ip-range-check": {
       "version": "0.0.2",
-      "resolved": "http://registry.npm.taobao.org/ip-range-check/download/ip-range-check-0.0.2.tgz",
-      "from": "ip-range-check@0.0.2"
+      "resolved": "https://registry.npmjs.org/ip-range-check/-/ip-range-check-0.0.2.tgz",
+      "integrity": "sha1-YFyFloeqTxhGORjUYZDYs2maKTw="
     },
     "ipaddr.js": {
       "version": "1.5.4",
-      "resolved": "https://registry.npm.taobao.org/ipaddr.js/download/ipaddr.js-1.5.4.tgz",
-      "from": "ipaddr.js@>=1.0.1 <2.0.0"
+      "resolved": "https://registry.npmjs.org/ipaddr.js/-/ipaddr.js-1.5.4.tgz",
+      "integrity": "sha1-liJj2dJhMpVvxcYwtjijDTzf/BQ="
     },
     "jschardet": {
       "version": "1.4.1",
-      "resolved": "http://registry.npm.taobao.org/jschardet/download/jschardet-1.4.1.tgz",
-      "from": "jschardet@1.4.1"
+      "resolved": "https://registry.npmjs.org/jschardet/-/jschardet-1.4.1.tgz",
+      "integrity": "sha1-Xg+JZt2+iX9tKH4hlr/gzzoAkOw="
     }
   }
 }
