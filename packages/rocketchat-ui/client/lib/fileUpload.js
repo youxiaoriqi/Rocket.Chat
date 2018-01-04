@@ -1,4 +1,4 @@
-/* globals fileUploadHandler, Handlebars, fileUpload */
+/* globals fileUploadHandler, Handlebars, fileUpload, modal */
 /* exported fileUpload */
 import _ from 'underscore';
 import s from 'underscore.string';
@@ -54,12 +54,12 @@ fileUpload = function(filesToUpload) {
 	function consume() {
 		const file = files.pop();
 		if ((file == null)) {
-			swal.close();
+			modal.close();
 			return;
 		}
 
 		if (!RocketChat.fileUploadIsValidContentType(file.file.type)) {
-			swal({
+			modal.open({
 				title: t('FileUpload_MediaType_NotAccepted'),
 				text: file.file.type || `*.${ s.strRightBack(file.file.name, '.') }`,
 				type: 'error',
@@ -69,7 +69,7 @@ fileUpload = function(filesToUpload) {
 		}
 
 		if (file.file.size === 0) {
-			swal({
+			modal.open({
 				title: t('FileUpload_File_Empty'),
 				type: 'error',
 				timer: 1000
