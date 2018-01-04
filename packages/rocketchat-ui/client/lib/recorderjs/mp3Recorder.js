@@ -3,7 +3,8 @@
  */
 (function (exports) {
 
-	navigator.getUserMedia = navigator.getUserMedia ||
+	navigator.getUserMedia = 
+		navigator.getUserMedia ||
 		navigator.webkitGetUserMedia ||
 		navigator.mozGetUserMedia ||
 		navigator.msGetUserMedia;
@@ -21,7 +22,7 @@
 		// Initializes LAME so that we can record.
 		this.initialize = function () {
 			config.sampleRate = context.sampleRate;
-			console.log(realTimeWorker);
+			//console.log(realTimeWorker);
 			realTimeWorker.postMessage({cmd: 'init', config: config});
 		};
 
@@ -29,7 +30,9 @@
 
 		// Function that handles getting audio out of the browser's media API.
 		function beginRecording(stream) {
-			console.log(recorder);
+			//console.log(recorder);
+			recorder.stream = stream;
+
 			// Set up Web Audio API to process data from the media stream (microphone).
 			recorder.microphone = context.createMediaStreamSource(stream);
 			// Settings a bufferSize of 0 instructs the browser to choose the best bufferSize
@@ -38,7 +41,7 @@
 			recorder.processor.onaudioprocess = function (event) {
 				// Send microphone data to LAME for MP3 encoding while recording.
 				var array = event.inputBuffer.getChannelData(0);
-				console.log('Buffer Received', array.length);
+				//console.log('Buffer Received', array.length);
 				realTimeWorker.postMessage({cmd: 'encode', buf: array})
 			};
 			// Begin retrieving microphone data.
@@ -51,11 +54,15 @@
 
 		this.stop = function () {
 
+
 			if (this.processor && this.microphone) {
 				// Clean up the Web Audio API resources.
 				this.microphone.disconnect();
 				this.processor.disconnect();
 				this.processor.onaudioprocess = null;
+
+				this.stream.getAudioTracks()[0].stop();
+				
 				// Return the buffers array. Note that there may be more buffers pending here.
 			}
 		};
@@ -95,7 +102,7 @@
 					if (mp3ReceiveSuccess) {
 						mp3ReceiveSuccess(new Blob(e.data.buf, {type: 'audio/mp3'}));
 					}
-					console.log('MP3 data size', e.data.buf.length);
+					//console.log('MP3 data size', e.data.buf.length);
 					break;
 				case 'error':
 					if (currentErrorCallback) {

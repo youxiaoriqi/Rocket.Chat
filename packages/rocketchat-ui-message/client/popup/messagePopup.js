@@ -286,6 +286,7 @@ Template.messagePopup.helpers({
 		return Object.assign(template.records.get(), {toolbar: true});
 	},
 	toolbarData() {
+		//return {};
 		return {...Template.currentData(), toolbar: true};
 	},
 	sidebarHeaderHeight() {

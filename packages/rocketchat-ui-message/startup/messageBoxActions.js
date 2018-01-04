@@ -22,21 +22,21 @@ RocketChat.messageBox.actions.add('Create_new', 'Audio_message', {
 
 		//init media under cordova
 		if (Meteor.isCordova && !window.mediaRec) {
-			alert('under cordova');
-			const src = 'cdvfile://localhost/temporary/myrecording.wav';
+			//alert('under cordova');
+			const src = 'cdvfile://localhost/temporary/myrecording.m4a';
 			window.mediaRec = new Media(src,
 				function() {
-					/*window.resolveLocalFileSystemURL(src, function(entry) {
+					window.resolveLocalFileSystemURL(src, function(entry) {
 						entry.file(function(file) {
 							var reader = new FileReader();
 
 														reader.onloadend = function() {
-                          								var blob = new Blob([ new Uint8Array(this.result)], { type: 'audio/wav'});
+                          								var blob = new Blob([ new Uint8Array(this.result)], { type: 'audio/mpeg'});
                                                             fileUpload([
                                                                 {
                                                                     file: blob,
-                                                                    type: 'audio/wav',
-                                                                    name: 'audio_record.wav'
+                                                                    type: 'audio/mpeg',
+                                                                    name: 'audio_record.m4a'
                                                                 }
                                                             ]);
                                                         };
@@ -44,7 +44,7 @@ RocketChat.messageBox.actions.add('Create_new', 'Audio_message', {
 						});
 					});
 
-					window.mediaRec = null; */
+					window.mediaRec = null; 
 				},
 				function(err) {
 					alert('recorder error' + JSON.stringify(err));
@@ -63,8 +63,8 @@ RocketChat.messageBox.actions.add('Create_new', 'Audio_message', {
 				if (window.mediaRec) {
 					window.mediaRec.stopRecord();
 					window.mediaRec.release();
-					alert(JSON.stringify(window.mediaRec));
-					alert('录音成功,结束录音');
+					//alert(JSON.stringify(window.mediaRec));
+					//alert('录音成功,结束录音');
 					//window.mediaRec.seekTo(0);
 					//window.mediaRec.play();
 				}
