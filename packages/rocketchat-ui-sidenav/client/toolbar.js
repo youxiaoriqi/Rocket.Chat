@@ -163,7 +163,8 @@ Template.toolbar.helpers({
 					query.t = 'd';
 				}
 
-				const searchQuery = new RegExp((RegExp.escape(filterText)), 'i');
+				//const searchQuery = new RegExp((RegExp.escape(filterText)), 'i');
+				const searchQuery = filterText;
 				query.$or = [
 					{ name: searchQuery },
 					{ fname: searchQuery }

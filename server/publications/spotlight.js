@@ -13,7 +13,8 @@ function fetchRooms(userId, rooms) {
 
 Meteor.methods({
 	spotlight(text, usernames, type = {users: true, rooms: true}, rid) {
-		const regex = new RegExp(s.trim(s.escapeRegExp(text)), 'i');
+		//const regex = new RegExp(s.trim(s.escapeRegExp(text)), 'i');
+		const regex = text;
 		const result = {
 			users: [],
 			rooms: []
