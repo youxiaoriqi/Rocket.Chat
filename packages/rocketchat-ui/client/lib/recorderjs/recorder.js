@@ -115,7 +115,7 @@
 								{
 									file: mp3Blob,
 									type: 'audio/mp3',
-									name: `${ TAPi18n.__('Audio record') }.MP3`
+									name: `${ TAPi18n.__('Audio record') }.mp3`
 								}
 							]);
 

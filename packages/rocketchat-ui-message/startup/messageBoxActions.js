@@ -15,33 +15,103 @@ RocketChat.messageBox.actions.add('Create_new', 'Video_message', {
 RocketChat.messageBox.actions.add('Create_new', 'Audio_message', {
 	id: 'audio-message',
 	icon: 'mic',
-	condition: () => (navigator.getUserMedia || navigator.webkitGetUserMedia) && RocketChat.settings.get('FileUpload_Enabled') && RocketChat.settings.get('Message_AudioRecorderEnabled') && (!RocketChat.settings.get('FileUpload_MediaTypeWhiteList') || RocketChat.settings.get('FileUpload_MediaTypeWhiteList').match(/audio\/wav|audio\/\*/i)),
+	condition: () => (navigator.getUserMedia || navigator.webkitGetUserMedia || Meteor.isCordova) && RocketChat.settings.get('FileUpload_Enabled') && RocketChat.settings.get('Message_AudioRecorderEnabled') && (!RocketChat.settings.get('FileUpload_MediaTypeWhiteList') || RocketChat.settings.get('FileUpload_MediaTypeWhiteList').match(/audio\/wav|audio\/\*/i)),
 	action({event, element}) {
 		event.preventDefault();
 		const icon = element.querySelector('.rc-icon');
 
+		//init media under cordova
+		if (Meteor.isCordova && !window.mediaRec) {
+			//alert('under cordova');
+			const src = 'cdvfile://localhost/temporary/myrecording.m4a';
+			window.mediaRec = new Media(src,
+				function() {
+					window.resolveLocalFileSystemURL(src, function(entry) {
+						entry.file(function(file) {
+							var reader = new FileReader();
+
+							reader.onloadend = function() {
+								var blob = new Blob([ new Uint8Array(this.result)], { type: 'audio/mpeg'});
+								fileUpload([
+									{
+										file: blob,
+										type: 'audio/mpeg',
+										name: 'audio_record.m4a'
+									}
+								]);
+							};
+							reader.readAsArrayBuffer(file);
+						});
+					});
+
+					window.mediaRec = null;
+				},
+				function(err) {
+					alert('recorder error' + JSON.stringify(err));
+				});
+		}
+
+
+
+
 		if (chatMessages[RocketChat.openedRoom].recording) {
-			AudioRecorder.stop(function(blob) {
-				popover.close();
-				icon.style.color = '';
-				icon.classList.remove('pulse');
-				chatMessages[RocketChat.openedRoom].recording = false;
-				fileUpload([
-					{
-						file: blob,
-						type: 'audio',
-						name: `${ TAPi18n.__('Audio record') }.wav`
-					}
-				]);
-			});
+			popover.close();
+			icon.style.color = '';
+			icon.classList.remove('pulse');
+
+			if (Meteor.isCordova) {
+				if (window.mediaRec) {
+					window.mediaRec.stopRecord();
+					window.mediaRec.release();
+					//alert(JSON.stringify(window.mediaRec));
+					//alert('录音成功,结束录音');
+					//window.mediaRec.seekTo(0);
+					//window.mediaRec.play();
+				}
+			} else {
+				if (window.recorder) {
+					window.recorder.stop();
+					window.recorder.getMp3Blob(function(blob) {
+
+						fileUpload([
+							{
+								file: blob,
+								type: 'audio/mp3',
+								name: 'audio_record.mp3'
+							}
+						]);
+					});
+					window.recorder = null;
+				}
+			}
+
+
+			chatMessages[RocketChat.openedRoom].recording = false;
+
+
 			return false;
 		}
 
 		chatMessages[RocketChat.openedRoom].recording = true;
-		AudioRecorder.start(function() {
-			icon.classList.add('pulse');
-			icon.style.color = 'red';
-		});
+		icon.classList.add('pulse');
+		icon.style.color = 'red';
+
+		if (Meteor.isCordova) {
+			if (window.mediaRec) {
+				window.mediaRec.startRecord();
+			}
+		} else {
+			window.recorder = new MP3Recorder({
+				bitRate: 64,
+				debug: true
+			});
+
+			window.recorder.start(function() {
+
+			}, function(error) {
+				alert('window recorder failed' + JSON.stringify(error));
+			});
+		}
 	}
 });
 
