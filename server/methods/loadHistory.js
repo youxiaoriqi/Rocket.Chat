@@ -57,10 +57,20 @@ Meteor.methods({
 		}
 
 		let records;
+
+		//修改为用户不能获取加入聊天室前其他人所发送的历史信息
+		const subscription = RocketChat.models.Subscriptions.findOneByRoomIdAndUserId(rid, fromId);
+		//暂时性的修正，以保证没有开始时间的消息订阅不能找到任何数据
+		const start = subscription.ts ? subscription.ts : new Date(2012, 6, 1);
+		console.log(subscription._id);
+		console.log(start);
+
 		if (end != null) {
-			records = RocketChat.models.Messages.findVisibleByRoomIdBeforeTimestampNotContainingTypes(rid, end, hideMessagesOfType, options).fetch();
+			//records = RocketChat.models.Messages.findVisibleByRoomIdBeforeTimestampNotContainingTypes(rid, end, hideMessagesOfType, options).fetch();
+			records = RocketChat.models.Messages.findVisibleByRoomIdBetweenTimestampsNotContainingTypes(rid, start, end, hideMessagesOfType, options).fetch();
 		} else {
-			records = RocketChat.models.Messages.findVisibleByRoomIdNotContainingTypes(rid, hideMessagesOfType, options).fetch();
+			//records = RocketChat.models.Messages.findVisibleByRoomIdNotContainingTypes(rid, hideMessagesOfType, options).fetch();
+			records = RocketChat.models.Messages.findVisibleByRoomIdAfterTimestampNotContainingTypes(rid, start, hideMessagesOfType, options).fetch();
 		}
 
 		const UI_Use_Real_Name = RocketChat.settings.get('UI_Use_Real_Name') === true;

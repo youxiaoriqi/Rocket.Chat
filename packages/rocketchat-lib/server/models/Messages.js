@@ -160,6 +160,25 @@ RocketChat.models.Messages = new class extends RocketChat.models._Base {
 		return this.find(query, options);
 	}
 
+	findVisibleByRoomIdAfterTimestampNotContainingTypes(roomId, timestamp, types, options) {
+		const query = {
+			_hidden: {
+				$ne: true
+			},
+			rid: roomId,
+			ts: {
+				$gt: timestamp,
+			}
+		};
+
+		if (Match.test(types, [String]) && (types.length > 0)) {
+			query.t =
+				{$nin: types};
+		}
+
+		return this.find(query, options);
+	}
+
 	findVisibleByRoomIdBeforeTimestampNotContainingTypes(roomId, timestamp, types, options) {
 		const query = {
 			_hidden: {
