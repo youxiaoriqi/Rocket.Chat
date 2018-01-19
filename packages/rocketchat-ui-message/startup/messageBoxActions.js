@@ -23,25 +23,46 @@ RocketChat.messageBox.actions.add('Create_new', 'Audio_message', {
 		//init media under cordova
 		if (Meteor.isCordova && !window.mediaRec) {
 			//alert('under cordova');
-			const src = 'cdvfile://localhost/temporary/myrecording.m4a';
+			//const src = 'cdvfile://localhost/temporary/myrecording.m4a';
+			const src = 'myrecording.m4a';
 			window.mediaRec = new Media(src,
 				function() {
-					window.resolveLocalFileSystemURL(src, function(entry) {
+					var path = '';
+
+					//因为压缩版的media插件不支持cdvfile协议，所以要区别每个平台下实际的文件位置
+					if (device.platform == 'iOS') {
+						path = cordova.file.tempDirectory;
+					} else if (device.platform == 'Android') {
+						path = cordova.file.externalRootDirectory;
+					}
+
+					window.resolveLocalFileSystemURL(path + src, function(entry) {
 						entry.file(function(file) {
 							var reader = new FileReader();
 
 							reader.onloadend = function() {
-								var blob = new Blob([ new Uint8Array(this.result)], { type: 'audio/mpeg'});
+								var blob = new Blob([ new Uint8Array(this.result)], { type: 'audio/mp4'});
 								fileUpload([
 									{
 										file: blob,
-										type: 'audio/mpeg',
+										type: 'audio/mp4',
 										name: 'audio_record.m4a'
 									}
 								]);
+
+								entry.remove(function() {
+								}, function(error) {
+									alert('temp audio file delete error' + JSON.stringify(error));
+								});
 							};
 							reader.readAsArrayBuffer(file);
+
+
+
 						});
+
+					}, function(err) {
+						alert('resolve localfile url error' + JSON.stringify(err));
 					});
 
 					window.mediaRec = null;

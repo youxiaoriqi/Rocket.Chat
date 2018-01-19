@@ -62,8 +62,7 @@ Meteor.methods({
 		const subscription = RocketChat.models.Subscriptions.findOneByRoomIdAndUserId(rid, fromId);
 		//暂时性的修正，以保证没有开始时间的消息订阅不能找到任何数据
 		const start = subscription.ts ? subscription.ts : new Date(2012, 6, 1);
-		console.log(subscription._id);
-		console.log(start);
+
 
 		if (end != null) {
 			//records = RocketChat.models.Messages.findVisibleByRoomIdBeforeTimestampNotContainingTypes(rid, end, hideMessagesOfType, options).fetch();
