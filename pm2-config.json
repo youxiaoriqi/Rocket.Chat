@@ -1,0 +1,18 @@
+{
+	"apps": [{
+		"name": "rocket.chat.0",
+		"max_memory_restart": "1024M",
+		"log_date_format": "YYYY-MM-DD HH:mm:ss SSS",
+		"script": "/var/www/rocket.chat/bundle/main.js",
+		"out_file": "/var/log/rocket.chat/app.log",
+		"error_file": "/var/log/rocket.chat/err.log",
+		"port": "3000",
+		"env": {
+			"MONGO_URL": "mongodb://localhost:27017/rocketchat",
+			"MONGO_OPLOG_URL": "mongodb://localhost:27017/local",
+			"ROOT_URL": "https://chat.waynes-tech.com",
+			"DDP_DEFAULT_CONNECTION_URL": "https://chat.waynes-tech.com",
+			"PORT": "3000"
+		}
+	}]
+}
